@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>黄柏相 · 自动化 · 嵌入式与工业控制</title>
+<meta name="author" content="黄柏相">
+<meta name="description" content="黄柏相，兰州理工大学自动化 2027 届。PLC 组态、现场仪表信号链路、STM32 监测系统、一级倒立摆 LQR / 串级 PID / BP 神经网络 PID 控制仿真、数控恒流源。含可交互倒立摆控制演示。">
+<meta name="theme-color" content="#fbfaf7">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="scroll-progress" aria-hidden="true"><i id="scroll-bar"></i></div>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark">H</span>
+      <span class="brand-text">黄柏相<span class="brand-sub">自动化 / 2027</span></span>
+    </a>
+    <nav class="nav-links" aria-label="页面导航">
+      <a href="#projects">项目</a>
+      <a href="#demo">演示</a>
+      <a href="#vizsec">联调</a>
+      <a href="#grid">变电</a>
+      <a href="#skills">能力</a>
+      <a href="#about">自评</a>
+      <a href="#contact">联系</a>
+      <a href="#more">更多</a>
+    </nav>
+    <!-- 简历 PDF 暂时关闭下载（2026-11-02，等新版简历）。新版到位后把下面这个 span 换回：
+         <a class="nav-cta" href="assets/黄柏相-简历.pdf" download>简历 PDF</a> -->
+    <span class="nav-cta is-off" aria-disabled="true" title="新版简历整理中，暂不提供下载">简历 PDF · 更新中</span>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero" id="contact">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dot"></span>2027 届 · 求职中 · 期望工作地 广东</p>
+        <div class="hero-id">
+          <h1>黄柏相</h1>
+        </div>
+        <p class="hero-lead">
+          自动化专业本科。做过 <strong>ABB PLC 整机联调</strong>、<strong>12 路传感的 STM32 监测系统</strong>，
+          也在食品包装产线做过六周开机点检与异常处置；课设里把<strong>一级倒立摆</strong>的
+          LQR、串级 PID 与神经网络 PID 放进同一口径比过。习惯按「分层定位」排查现场故障，
+          也习惯把过程写成能复用的排故清单。
+        </p>
+        <div class="hero-meta">
+          <span class="chip">兰州理工 · 自动化本科</span>
+          <span class="chip">意向：电气 / 自控 / 运维 / 嵌入式</span>
+          <span class="chip">广东 · 2027.06 到岗</span>
+          <span class="chip">期望 7k–10k</span>
+          <span class="chip">C1D · 接受出差</span>
+          <span class="chip">22 岁 · 共青团员</span>
+        </div>
+
+        <div class="hero-contact">
+          <div class="c-row">
+            <span class="c-k">邮箱</span>
+            <a class="c-v" href="mailto:2053941733@qq.com">2053941733@qq.com</a>
+            <button class="c-copy" type="button" data-copy="2053941733@qq.com">复制</button>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a class="btn btn-solid" href="#projects">查看项目</a>
+          <!-- 简历 PDF 更新期间首屏不放「下载简历」：主视觉里挂一颗点不动的按钮像坏了，
+               信息由下面那行 hero-note 承担。新版到位后在这里加回：
+               <a class="btn btn-ghost" href="assets/黄柏相-简历.pdf" download>下载简历</a> -->
+          <button class="btn btn-ghost" type="button" id="btn-register">留个机构名</button>
+        </div>
+        <p class="hero-note">单页简历 PDF 正在更新，暂不提供下载｜「留个机构名」自愿，只记机构与时间。</p>
+      </div>
+      <div class="hero-stage">
+        <canvas id="hero-canvas" aria-label="倒立摆线框示意图" role="img"></canvas>
+        <p class="stage-cap">sim. 01 — 一级倒立摆 · 线框示意</p>
+      </div>
+    </div>
+    <div class="hero-rule" aria-hidden="true"></div>
+  </section>
+
+  <section class="sec" id="projects">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <h2>项目经验</h2>
+      <span class="sec-en">Projects</span>
+      <i class="sec-line"></i>
+    </div>
+    <div class="cards" id="project-cards">
+
+      <article class="card" data-card id="card-inert">
+        <button class="card-head" type="button" aria-expanded="false">
+          <div class="card-title-row">
+            <h3>惰气控制系统设计</h3>
+            <span class="role">负责人</span>
+          </div>
+          <p class="card-sub">ABB AC500 PM556 PLC + 力控组态 · 课程综合训练（自选课题）· 2026.07</p>
+          <p class="card-line">8DI / 6DO 全流程联锁，5 类故障独立排到根因。</p>
+          <span class="card-toggle" aria-hidden="true">展开</span>
+        </button>
+        <div class="card-body">
+          <dl>
+            <div><dt>项目内容</dt><dd>以 ABB AC500 PM556 为控制核心、力控组态为上位监控，实现「空气引入 → 点火降氧 → 冷却过滤 → 惰气收集」全流程自动化。在 Automation Builder（CODESYS 内核）中按监控 / 控制 / 执行三层规划 I/O（8DI / 6DO，扩展 AX561 模拟量 + DC562 数字量模块）；下位机以 LD（IEC 61131-3）单一 POU 循环扫描，经 Modbus TCP 与上位机通信。</dd></div>
+            <div><dt>本人职责</dt><dd>作为负责人独立完成硬件组态与软件设计：规划 I/O 点表与模块地址；编写 LD 顺序控制与条件连锁逻辑；经 COM_MOD_MAST 以 Modbus 写 WR 区驱动 ACS355 变频器分档调速（≈7.5 / 25 / 45 Hz）；搭建力控上位监控并与 PLC 做同址映射；负责整机联调与故障排查，交付可复用的排故清单。</dd></div>
+            <div><dt>技术要点</dt><dd>
+              <ul class="mini-list">
+                <li><b>联锁顺序</b>：TON 延时强制「先点火后喷油」，避免炉膛先积油再点火；电机自锁 + 互锁防止同时启动。</li>
+                <li><b>急停取常闭</b>：断线即等于触发，断电、接触不良、按按钮都进入安全状态，属于故障导向安全（fail-safe）接法。</li>
+                <li><b>传动通信</b>：Modbus 写变频器频率给定寄存器，三档频率切换后读实际频率核对跟随情况。</li>
+                <li><b>上位监控</b>：力控画面与 PLC 变量同址映射，实现流程状态可视化与参数在线调参。</li>
+              </ul>
+            </dd></div>
+                        <div><dt>调试记录</dt><dd>
+              <ul class="mini-list fix-list">
+                <li><b>燃油泵跟着风机一起启</b>——炉膛先积油再点火是爆燃风险。查 LD 发现泵和风机共用同一个启动条件，条件本身没写错，是「先后顺序」没约束住 → 把点火确认前置成泵的使能位，再补 TON 延时。</li>
+                <li><b>上位画面数值不动，PLC 侧却在变</b>——先怀疑通信断，但连接状态正常；比对地址发现整组变量是「整齐地偏了一段」而不是随机错 → 判为 Modbus 寄存器基址偏移，改同址映射后恢复。</li>
+                <li><b>电磁阀通电不动作</b>——DO 指示灯亮，万用表量到输出有电压、阀体却不动 → 装配方向接反，重装后正常。</li>
+              </ul>
+            </dd></div>
+            <div><dt>项目成果</dt><dd>实现全流程自动化运行、参数在线调参与三档调速稳定切换；联调中独立定位并解决 5 类典型故障——下载失败（IP 网段）、燃油泵误启（补 TON + 点火前置）、变量不刷新（Modbus 地址偏移）、电磁阀方向接反、通信超时（扫描周期需 ≥20 ms），排查耗时从最初的数小时压缩到约 30 分钟，整机联调与演示通过。</dd></div>
+            <div><dt>复盘</dt><dd>这一版只做到<b>软件联锁</b>。真实燃烧设备还需要硬件层面的互锁（火焰检测器确认着火后才允许开油阀，信号直接串在油阀回路、不走程序）、氧含量在线检测联动、以及故障时的安全停机顺序（先断油、再停风、最后报警）。课设里我只验证了「能不能跑起来」，没验证「跑飞了怎么办」，这是事后才意识到的短板。</dd></div>
+          </dl>
+          <p class="card-note">技术栈：ABB AC500 · Automation Builder · LD / IEC 61131-3 · Modbus TCP · 力控组态 · ACS355 变频器<br>资料：<a href="https://wwbta.lanzouq.com/iAGAM3xt42re" target="_blank" rel="noopener">wwbta.lanzouq.com/iAGAM3xt42re</a><br>流程演示：<a class="link-btn" href="#proc">见下方演示 · 自动 / 手动按工艺走一遍 →</a><br>三维拆解：<a class="link-btn" href="#viz-inert">见下方演示 · 惰气三维视图 →</a></p>
+        </div>
+      </article>
+
+      <article class="card" data-card id="card-tanks">
+        <button class="card-head" type="button" aria-expanded="false">
+          <div class="card-title-row">
+            <h3>双水罐液位监控系统</h3>
+            <span class="role">独立完成</span>
+          </div>
+          <p class="card-sub">力控组态 + 西门子 S7-1500 / PLCSIM · 课程实验 · 2026.04–05</p>
+          <p class="card-line">阀泵联锁 + 越限报警 + 四画面互跳，通信联调通过。</p>
+          <span class="card-toggle" aria-hidden="true">展开</span>
+        </button>
+        <div class="card-body">
+          <dl>
+            <div><dt>项目内容</dt><dd>在力控组态中搭建两水罐液位监控系统：罐体按液位驱动填充动画，水泵、调节阀、出水阀做开关状态显示，管道做流动属性；自建数据变量并编写控制脚本，使液位在规定区间循环变化、阀泵按联锁条件动作；越限报警、历史与实时趋势、开机 / 主界面 / 报警 / 趋势四画面互跳，并与 S7-1500（PLCSIM）通信联调。</dd></div>
+            <div><dt>本人职责</dt><dd>独立完成变量规划与命名、画面与动画组态、控制脚本编写、报警与趋势配置、画面跳转与权限设置，以及力控与 PLC 的通信建立、变量地址映射和联调排故。</dd></div>
+            <div><dt>技术要点</dt><dd>
+              <ul class="mini-list">
+                <li><b>联锁按与逻辑串接</b>：调节阀需「罐 1 达高位且罐 2 低于低位」同时成立才允许打开，任一条件消失即关断，防溢罐也防干抽；水泵、出水阀各按单点液位限位启停。</li>
+                <li><b>高低限分开设定形成回差</b>（滞环），避免阈值附近反复动作。</li>
+                <li><b>报警与趋势分开组态</b>，趋势按固定采样周期记录，不跟着动画刷新走。</li>
+              </ul>
+            </dd></div>
+                        <div><dt>调试记录</dt><dd>
+              <ul class="mini-list fix-list">
+                <li><b>画面数值全是 0</b>——PLCSIM 侧程序在跑，力控读不到。逐项核对通道配置，发现连接压根没建立 → 补 IP 与机架 / 槽位后恢复。</li>
+                <li><b>连上了但数值不刷新</b>——连接正常、地址也对，最后落在数据类型上：组态侧按字读、PLC 侧是另一个宽度 → 改数据类型与偏移。</li>
+                <li><b>调节阀在阈值附近反复开关</b>——高限和低限用同一个值，边界上必然抖动 → 高低限分开设定形成回差。</li>
+              </ul>
+            </dd></div>
+            <div><dt>项目成果</dt><dd>动画、脚本、报警、趋势、多画面跳转五类必做项全部实现并演示通过；力控与 PLCSIM 通信正常，可读写变量并联动画面。调试中定位并解决两类问题：变量地址与数据类型不匹配导致数值不刷新、通信未连上导致画面全零。</dd></div>
+            <div><dt>复盘</dt><dd>这一版的液位是<b>步进脚本模拟</b>（每周期 ±5），并非真实模拟量闭环。到现场应改为液位计 4–20 mA 进模拟量模块、由 PLC 侧做 PID 调节，上位只负责监控与参数下发——课设验证的是组态与联锁逻辑，不是控制品质。</dd></div>
+          </dl>
+          <p class="card-note">技术栈：力控组态 · S7-1500 / PLCSIM · 变量组态与脚本 · 越限报警 · 实时 / 历史趋势 · 四画面互跳<br>三维拆解：<a class="link-btn" href="#viz-tanks">见下方演示 · 双水罐三维视图 →</a></p>
+        </div>
+      </article>
+
+      <article class="card" data-card id="card-substation">
+        <button class="card-head" type="button" aria-expanded="false">
+          <div class="card-title-row">
+            <h3>110kV 降压变电站电气一次设计</h3>
+            <span class="role">全程参与 · 制图</span>
+          </div>
+          <p class="card-sub">AutoCAD 一次设计 + 标幺值短路计算校验 · 课程综合训练 · 2025.12–2026.01</p>
+          <p class="card-line">两台 12.5 MVA 主变互相转带，设备按各点短路水平分档配置。</p>
+          <span class="card-toggle" aria-hidden="true">展开</span>
+        </button>
+        <div class="card-body">
+          <dl>
+            <div><dt>项目内容</dt><dd>工厂 110/10 kV 降压变电站电气一次部分设计。按任务书负荷资料统计得出有功缺额约 40.89 MW，据此确定电压等级与主接线方案：110 kV 侧双母线（含母联）、10 kV 侧单母线分段，两条 110 kV 架空进线，两台 S11-M-12500/110 主变分列运行。主变参数 110/10.5 kV、±4×2.5% 有载调压、Uk%=10.5、YNd11。用标幺值法（Sd=100 MVA、Ud=10.5 kV、Id=5.5 kA）算各短路点电流，按额定参数、动稳定、热稳定三项逐台校验设备，最后用 AutoCAD 绘制 A1 主接线图并出设备明细表。</dd></div>
+            <div><dt>本人职责</dt><dd>全程参与并用 AutoCAD 绘制 A1 主接线图；参与电压等级与主接线方案比选、主变容量与台数论证、断路器与隔离开关及互感器母线的选型；承担负荷统计与短路电流的部分计算，配合完成继电保护整定。</dd></div>
+            <div><dt>技术要点</dt><dd>
+              <ul class="mini-list">
+                <li><b>台数由「能不能顶」定，不由「够不够用」定</b>：剩余负荷折算 11.11 MVA，单台 12.5 MVA 本来够用；定两台是因为任一台检修或故障时另一台要能带起全部剩余负荷——11.11 &lt; 12.5 刚好够，容量也就此卡在 12.5 MVA 这档。</li>
+                <li><b>开断能力按各点短路水平分档</b>：110 kV 进线断路器取 40 kA，母联与主变间隔取同系列 31.5 kA；10 kV 侧 20 kA 开断对 Ik≈5 kA、峰值 50 kA 对 ish≈12.75 kA 各留约 4 倍。同一电压等级不同位置配不同档，不搞一刀切。</li>
+                <li><b>两条供电路径分开算</b>：系统供（110 kV 经主变）短路点 K₂ 得 Ik≈5 kA、ish≈12.75 kA、Sk≈90.9 MVA；发电厂直供 10 kV 那条 Ik=0.55 kA、ish=1.44 kA。两者的工作电流也不同（611 A 与 917 A），选型各按各的路径配。</li>
+                <li><b>软母线看机械强度，硬母线看动稳定</b>：110 kV 户外选 LGJ-400/35 钢芯铝绞线，载流量 710 A 对 66 A 是十倍余量，真正的约束是短路电动力下的机械强度；10 kV 柜内选 LMY-100×10 矩形硬铝排，取大截面主因是相邻母排间的电动力与电流平方成正比，排间距和厚度不够会变形。</li>
+              </ul>
+            </dd></div>
+            <div><dt>校验与取舍</dt><dd>
+              <ul class="mini-list fix-list">
+                <li><b>主变先按单台考虑，算完才发现没有备用</b>——剩余负荷 11.11 MVA 落在一台 12.5 MVA 之内，看似够用；但检修窗口一开就得全站停电 → 改两台分列运行，容量不用往上加档，2×12.5 MVA 正好卡住。</li>
+                <li><b>10 kV 断路器额定电流按 630 A 选，回头核出 917 A</b>——发电厂直供那条路径的负荷比剩余负荷大，630 A 覆盖不住 → 该路径改 1250 A 档。同一个 10 kV 等级出现 630 A / 1250 A 两个档，是两条路径负荷不同造成的，不是选型随意。</li>
+                <li><b>母联从 40 kA 降到 31.5 kA</b>——母联点的短路电流比进线端低一档（电流经线路阻抗与进线断路器后已被削弱），照进线那档选等于多花钱 → 按短路水平选，这是这次设计里最像工程取舍的一处。</li>
+              </ul>
+            </dd></div>
+            <div><dt>项目成果</dt><dd>交付 A1 主接线图、设备选型校验表、短路电流计算书与接地算稿；全部设备通过额定参数 + 动稳定 + 热稳定三项校验并留有余量（10 kV 侧 ZW32-12/630-20，对应 Ik≈5 kA、ish≈12.75 kA）。A1 图按制图惯例用「同左」压缩重复间隔，图上设备明细表可直接对照编号核查。</dd></div>
+            <div><dt>复盘</dt><dd>这一版是<b>稳态设计</b>。短路计算只承担了一部分，标幺值网络化简那套手算没有独立走完；保护整定是配合完成的，速断与过流的定值配合只在规程层面校验过，没做完整的级差配合表。无功补偿选并联电容器组，是因为课设负荷是稳态的；现场若有冲击性负荷或谐波源，电容器组会与谐波谐振，得换 SVG 或加滤波支路。另外报告附录的设备汇总表前后不一致（同一电压等级出现三个断路器型号），我是做完图之后才发现的——图与正文对得上、附录没跟上，这也是我后来养成「图、表、算三方对齐」习惯的原因。</dd></div>
+          </dl>
+          <p class="card-note">技术栈：AutoCAD · 标幺值短路计算 · 设备动 / 热稳定校验 · 负荷统计与无功补偿 · 一次主接线<br>图纸：<a href="assets/变电站-A1主接线图.pdf" target="_blank" rel="noopener">A1 主接线图（PDF · 594×420 mm）→</a><br>三维演示：<a class="link-btn" href="#grid">见下方 04 · 三维全景 + 电流巡游 →</a></p>
+        </div>
+      </article>
+
+      <article class="card" data-card id="card-warehouse">
+        <button class="card-head" type="button" aria-expanded="false">
+          <div class="card-title-row">
+            <h3>智能仓库监测系统</h3>
+            <span class="role">负责人</span>
+          </div>
+          <p class="card-sub">STM32F103C8T6（Cortex-M3）· 课程设计 · 自主开发 · 2026.05–06</p>
+          <p class="card-line">12 路传感、双重判定把误报压到 0，连续 8 小时无丢数。</p>
+          <span class="card-toggle" aria-hidden="true">展开</span>
+        </button>
+        <div class="card-body">
+          <dl>
+            <div><dt>项目内容</dt><dd>基于 STM32F103C8T6 搭建覆盖 3 间仓库的安全监测系统，集成 LM35 温度、DHT11 温湿度、MQ-2 烟雾、红外入侵共 12 路传感，按「采集—主控—执行」三层组织，配 0.96 寸 OLED（I2C）多页显示、蜂鸣器 + LED 声光报警与消防联动；基于标准外设库（SPL）在 Keil MDK 开发，主循环状态机周期约 300 ms。</dd></div>
+            <div><dt>本人职责</dt><dd>独立完成 12 路传感接入与驱动编写；实现温度 &gt;90℃ 与烟雾双重判定、ADC 多通道扫描 + 均值滤波、红外电压跌落入侵检测；编写 OLED 多页显示与报警状态机；经 J-Link 烧录固件，负责 Proteus 仿真与实物联调。</dd></div>
+            <div><dt>传感与接口</dt><dd>
+              <ul class="mini-list">
+                <li><b>LM35 / MQ-2</b>：模拟量，走 ADC 多通道扫描；MQ-2 输出随预热时间漂移，上电后先做基线校准。</li>
+                <li><b>DHT11</b>：单总线，微秒级时序，读取时关中断避免被打断，且采样降频、不是每圈都读。</li>
+                <li><b>红外入侵</b>：电平 / 电压跌落判定，属开关量输入。</li>
+                <li><b>OLED 0.96"</b>：I2C 总线上只有这一个器件，不存在同地址冲突。</li>
+              </ul>
+            </dd></div>
+                        <div><dt>调试记录</dt><dd>
+              <ul class="mini-list fix-list">
+                <li><b>单点温度判据下误报不断</b>——环境温度一波动就报警 → 改成温度 + 烟雾双重判定，误报归零；90℃ 是实验条件下能稳定复现火警的「确认」值，不是随便取的。</li>
+                <li><b>MQ-2 上电后读数一路往上爬</b>——传感器预热期输出漂移，拿来判定必然误报 → 上电先做基线校准；滤波值只上显示，报警判定走原始值，免得滤波器把报警拖慢。</li>
+                <li><b>串口能通但速率整体偏</b>——编译能过、程序也跑，是对照 datasheet 查时钟树和分频才发现的 → 用示波器实测反推真实波特率。</li>
+              </ul>
+            </dd></div>
+            <div><dt>项目成果</dt><dd>Proteus 仿真与实物联调均稳定运行，实现 3 间仓库温度 / 湿度 / 烟雾 / 入侵集中监视与声光报警；采用温度 + 烟雾双重判定后误报降至 0 次（单点温度判据下环境温度波动即频繁误报），报警响应 &lt;1 s，连续运行 8 小时以上无死机 / 丢数。</dd></div>
+            <div><dt>指标口径</dt><dd>「0 次误报」指<b>连续 8 小时空仓运行、无真实异常</b>条件下的统计，不是产线长期运行数据；90℃ 是实验条件下能稳定复现火警的「确认」阈值，真实仓库应做两级判定（如 45–60℃ 预警、90℃ 确认）。均值滤波只用于显示与趋势，报警判定走原始值，避免滤波器把报警拖慢。</dd></div>
+            <div><dt>复盘</dt><dd>驱动框架与初始化代码借助大模型起手，但配置逐条对照 datasheet 核对——大模型给小众外设的参数经常是猜的，典型如时钟树和分频配错：编译能过、程序也能跑，但串口波特率整体偏、ADC 采样率与预期差一截，只能靠示波器实测反推。另外这套是轮询状态机，够用但不严格，要保证实时性应上中断或 DMA + 环形缓冲。</dd></div>
+          </dl>
+          <p class="card-note">技术栈：STM32F103 · SPL · Keil MDK · I2C / ADC / 单总线 · Proteus<br>资料：<a href="https://wwbta.lanzouq.com/i8BmX3xt7ona" target="_blank" rel="noopener">wwbta.lanzouq.com/i8BmX3xt7ona</a></p>
+        </div>
+      </article>
+
+      <article class="card" data-card id="card-pendulum">
+        <button class="card-head" type="button" aria-expanded="false">
+          <div class="card-title-row">
+            <h3>一级倒立摆控制仿真</h3>
+            <span class="role role-muted">小组成员</span>
+          </div>
+          <p class="card-sub">MATLAB / Simulink + Simscape · 课程设计 · 2026.05–06</p>
+          <p class="card-line">三种控制器同一口径对比，踩出两个反直觉的坑。</p>
+          <span class="card-toggle" aria-hidden="true">展开</span>
+        </button>
+        <div class="card-body">
+          <dl>
+            <div><dt>项目内容</dt><dd>以一级倒立摆（小车 + 单杆）为对象，先建立非线性动力学模型，在竖直平衡点附近线性化得到状态空间方程；在 Simulink / Simscape 里搭非线性被控对象，在同一初始偏角、同一扰动量下分别接入 LQR、串级 PID 双闭环与 BP 神经网络 PID 三种控制器，做时域仿真并横向对比。</dd></div>
+            <div><dt>本人职责</dt><dd>小组共同完成建模与线性化、三种控制器的设计与整定、Simulink 仿真搭建、数据整理与曲线对比；课设报告按指导书章节结构编写，我是小组成员之一。</dd></div>
+            <div><dt>控制方案</dt><dd>
+              <ul class="mini-list">
+                <li><b>LQR</b>：取角度、角速度、位移、速度四个状态量，靠 Q / R 权重在「立得稳」与「回得快」之间取舍，解 Riccati 方程拿反馈增益。</li>
+                <li><b>串级 PID 双闭环</b>：外环按位置偏差给出姿态参考，内环按角度偏差出力，两层都限幅。结构最直观、最好向别人解释，代价是参数要分层试凑，两个环相互牵制。</li>
+                <li><b>BP 神经网络 PID</b>：用反向传播在线调整 PID 三个参数，让增益随误差自己变。难点不在网络结构，而在样本、初值与学习率——学习率给大了，起摆那一瞬间就发散。</li>
+              </ul>
+            </dd></div>
+                        <div><dt>调试记录</dt><dd>
+              <ul class="mini-list fix-list">
+                <li><b>算出来的增益代进 Simulink 完全不复现</b>——两边转动惯量的口径不一致，模型不同源 → 统一参数后一次就对上了；这一处来回调了十几轮。</li>
+                <li><b>低增益时摆立住了，小车却一路跑偏</b>——只看角度曲线会误判成「已经稳了」→ 补上行程判定才暴露出这种失效。</li>
+              </ul>
+            </dd></div>
+            <div><dt>对比与结论</dt><dd>对比口径统一为超调量、调节时间、稳态误差与扰动后的恢复过程，而不是只看「能不能立住」。三种方案各有取舍：LQR 有明确的二次型指标、整定路径清楚，但对模型精度最敏感；串级 PID 不依赖精确模型、现场好调，但要人肉试参；BP 神经网络 PID 在线适应性最强，可解释性与稳定性论证最弱。具体数值以课设报告里的实测曲线为准。</dd></div>
+            <div><dt>复盘</dt><dd>踩得最深的一个坑是<b>线性化模型与非线性仿真必须同源</b>：我先按极点判据搜出一组增益，代进 Simulink 却完全不复现，最后发现是两边转动惯量的取值不一致。另一个反直觉的地方是，低增益的失效形态不是「摆先倒」，而是<b>摆勉强立住、小车一路跑偏越界</b>——所以补了行程判定，否则这种失效光看角度曲线根本看不出来。</dd></div>
+          </dl>
+          <p class="card-note">技术栈：MATLAB / Simulink · Simscape · LQR（Riccati）· 串级 PID · BP 神经网络 PID · CasADi<br>在线演示：<a href="#demo">本页 02 · 交互演示（串级 PD 简化版）→</a></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec sec-demo" id="demo">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <h2>交互演示 · 倒立摆</h2>
+      <span class="sec-en">Live Demo</span>
+      <i class="sec-line"></i>
+    </div>
+    <div class="demo-wrap">
+      <div class="demo-stage">
+        <canvas id="sim-canvas" aria-label="三维倒立摆仿真" role="img"></canvas>
+        <div class="demo-hud" id="hud">
+          <span><b id="hud-theta">0.0</b><i>deg</i></span>
+          <span><b id="hud-x">0.00</b><i>m</i></span>
+          <span><b id="hud-f">0.0</b><i>N</i></span>
+          <span class="hud-state" id="hud-state">运行中</span>
+        </div>
+        <div class="demo-fallback" id="sim-fallback" hidden>
+          <p>当前浏览器未启用 WebGL，三维视图无法呈现。</p>
+          <p>右侧滑块与曲线仍然可用，物理模型在 2D 层照常运行。</p>
+        </div>
+        <p class="demo-narr" id="demo-narr" aria-live="polite"></p>
+      </div>
+
+      <div class="demo-panel">
+        <div class="panel-block">
+          <div class="panel-title">控制增益</div>
+          <label class="slider">
+            <span class="slider-label">K<sub>p</sub> 角度比例</span>
+            <input type="range" id="g-kp" min="5" max="300" step="1" value="120">
+            <output id="o-kp">120</output>
+          </label>
+          <label class="slider">
+            <span class="slider-label">K<sub>d</sub> 角度微分</span>
+            <input type="range" id="g-kd" min="0" max="60" step="1" value="15">
+            <output id="o-kd">15</output>
+          </label>
+          <label class="slider">
+            <span class="slider-label">K<sub>c</sub> 位置环</span>
+            <input type="range" id="g-kc" min="0" max="0.30" step="0.01" value="0.03">
+            <output id="o-kc">0.03</output>
+          </label>
+          <label class="slider">
+            <span class="slider-label">K<sub>v</sub> 速度环</span>
+            <input type="range" id="g-kv" min="0" max="0.60" step="0.02" value="0.10">
+            <output id="o-kv">0.10</output>
+          </label>
+        </div>
+
+        <div class="panel-block">
+          <div class="panel-title">响应曲线<span class="panel-hint">近 12 秒</span></div>
+          <canvas id="scope" width="560" height="150" aria-label="角度与位移响应曲线" role="img"></canvas>
+          <div class="legend">
+            <span><i class="sw sw-theta"></i>姿态角 θ</span>
+            <span><i class="sw sw-x"></i>小车位移 x</span>
+          </div>
+        </div>
+
+        <div class="panel-block panel-actions">
+          <button class="btn btn-sm" id="btn-kick" type="button">施加扰动</button>
+          <button class="btn btn-sm" id="btn-reset" type="button">重新摆起</button>
+          <button class="btn btn-sm" id="btn-restore" type="button" title="四个增益恢复默认值，并重新摆起">一键复原</button>
+          <button class="btn btn-sm btn-ghost" id="btn-pause" type="button">暂停</button>
+        </div>
+        <p class="panel-note">
+          默认增益按 0.25 rad 起摆、约 8 秒收敛试出；K<sub>p</sub> 拖到最低会看到摆勉强立住、小车越界。
+          「重新摆起」保留增益，「一键复原」恢复默认。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-demo" id="vizsec">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <h2>交互演示 · 软硬件联调</h2>
+      <span class="sec-en">SCADA + Field</span>
+      <i class="sec-line"></i>
+    </div>
+    <p class="sec-intro">左边点「启动 S0」，右边的风机、点火与阀门跟着动。</p>
+
+    <div class="link-wrap" id="link">
+      <div class="proc-inline" id="proc">
+        <div class="proc-head">
+          <h3>上位机 · 工艺流程</h3>
+          <span class="proc-sub">自动 / 手动 · TON × 4 顺序联锁</span>
+        </div>
+      <div class="proc-body">
+        <div class="proc-stage" id="proc-stage">
+          <div class="proc-hud">
+            <span>阶段 <b id="proc-phase">待机</b></span>
+            <span>氧含量 <b id="proc-o2">20.9%</b></span>
+            <span>储罐 <b id="proc-level">0%</b></span>
+            <span>风机 <b id="proc-hz">停</b></span>
+          </div>
+        </div>
+        <aside class="proc-side">
+          <div class="proc-block proc-block--mode">
+            <div class="proc-title">运行模式</div>
+            <div class="seg" id="proc-mode">
+              <button class="seg-btn is-on" data-mode="auto" type="button">自动</button>
+              <button class="seg-btn" data-mode="manual" type="button">手动</button>
+            </div>
+            <div class="proc-btns">
+              <button class="btn btn-sm" id="proc-start" type="button">启动 S0</button>
+              <button class="btn btn-sm btn-ghost" id="proc-stop" type="button">停止</button>
+              <button class="btn btn-sm btn-ghost" id="proc-reset" type="button">重置</button>
+              <button class="btn btn-sm proc-estop" id="proc-estop" type="button">急停 S1</button>
+            </div>
+          </div>
+          <div class="proc-block">
+            <div class="proc-title">顺序延时 <span class="proc-hint">TON × 4 · 秒数可改</span></div>
+            <div class="proc-seq">
+              <div class="seq-row">
+                <label class="seq-k" for="proc-delay">点火 → 允许投油</label>
+                <input id="proc-delay" type="number" min="0" max="20" step="0.5" value="5" aria-label="TON1 点火到允许投油的延时秒数">
+                <span class="seq-u">s</span>
+                <span class="seq-v" id="proc-ton-state">待机</span>
+                <div class="proc-bar"><i id="proc-ton-bar"></i></div>
+              </div>
+              <div class="seq-row">
+                <label class="seq-k" for="proc-ptime">燃油泵 → 油压</label>
+                <input id="proc-ptime" type="number" min="0" max="10" step="0.5" value="2" aria-label="TON2 燃油泵投入到油压建立的秒数">
+                <span class="seq-u">s</span>
+                <span class="seq-v" id="proc-p-state">未建压</span>
+                <div class="proc-bar"><i id="proc-p-bar"></i></div>
+              </div>
+              <div class="seq-row">
+                <label class="seq-k" for="proc-vtime">阀得电 → 开到位</label>
+                <input id="proc-vtime" type="number" min="0" max="8" step="0.5" value="1.5" aria-label="TON3 阀门得电到开到位反馈的秒数">
+                <span class="seq-u">s</span>
+                <span class="seq-v" id="proc-v-state">全关</span>
+                <div class="proc-bar"><i id="proc-v-bar"></i></div>
+              </div>
+              <div class="seq-row">
+                <label class="seq-k" for="proc-ctime">冷却泵 → 出口</label>
+                <input id="proc-ctime" type="number" min="0" max="12" step="0.5" value="2.5" aria-label="TON4 冷却泵启动到出口建立的秒数">
+                <span class="seq-u">s</span>
+                <span class="seq-v" id="proc-c-state">未建立</span>
+                <div class="proc-bar"><i id="proc-c-bar"></i></div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <div class="viz-inline viz-inline--field" data-viz-scene="inert" id="viz-inert">
+      <div class="viz-inline-head">
+        <h3>现场 · 惰气装置</h3>
+        <span class="viz-sub">3D 还原 · 随左侧操作联动</span>
+      </div>
+      <div class="viz-body">
+        <div class="viz-stage" tabindex="0">
+          <canvas class="viz-canvas" aria-label="惰气控制系统三维视图" role="img"></canvas>
+          <div class="viz-hud"></div>
+          <div class="viz-tip" hidden></div>
+          <p class="viz-hint">拖动旋转 · 点部件看细节</p>
+          <p class="viz-narr" aria-live="polite"></p>
+          <div class="viz-explode-rail">
+            <span class="rail-k" aria-hidden="true">拆解</span>
+            <div class="rail-slider">
+              <input class="viz-explode" type="range" min="0" max="100" step="1" value="0" aria-label="惰气拆解程度">
+            </div>
+            <output class="viz-explode-out">0%</output>
+          </div>
+        </div>
+        <aside class="viz-side">
+          <div class="viz-card">
+            <h4 class="viz-part">点击场景里的部件</h4>
+            <p class="viz-desc">点部件看它的作用与信号，再点空白处收回。</p>
+          </div>
+          <div class="viz-block viz-extra" hidden></div>
+        </aside>
+        <div class="proc-block proc-block--field">
+          <div class="proc-title">就地操作 <span class="proc-hint">手动模式下逐个动作，联锁照样拦</span></div>
+          <div class="proc-devices" id="proc-devices"></div>
+        </div>
+      </div>
+    </div>
+
+      <div class="proc-block proc-block--log">
+        <div class="proc-title">事件 <span class="proc-hint">上位机与现场同一条时序</span></div>
+        <ol class="proc-log" id="proc-log"></ol>
+      </div>
+    </div>
+
+    <div class="viz-inline" data-viz-scene="tanks" id="viz-tanks">
+      <div class="viz-inline-head">
+        <h3>双水罐液位监控</h3>
+        <span class="viz-sub">力控组态 + S7-1500 / PLCSIM · 2026.04–05 · 液位为脚本步进模拟</span>
+      </div>
+      <div class="viz-body">
+        <div class="viz-stage" tabindex="0">
+          <canvas class="viz-canvas" aria-label="双水罐液位监控三维视图" role="img"></canvas>
+          <div class="viz-hud"></div>
+          <div class="viz-tip" hidden></div>
+          <p class="viz-hint">拖动旋转 · 点部件看细节</p>
+          <p class="viz-narr" aria-live="polite"></p>
+          <div class="viz-explode-rail">
+            <span class="rail-k" aria-hidden="true">拆解</span>
+            <div class="rail-slider">
+              <input class="viz-explode" type="range" min="0" max="100" step="1" value="0" aria-label="双水罐拆解程度">
+            </div>
+            <output class="viz-explode-out">0%</output>
+          </div>
+        </div>
+        <aside class="viz-side">
+          <div class="viz-card">
+            <h4 class="viz-part">点击场景里的部件</h4>
+            <p class="viz-desc">点部件看它的作用与信号，再点空白处收回。</p>
+          </div>
+          <div class="viz-block viz-extra" hidden></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-demo" id="grid">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <h2>交互演示 · 变电站</h2>
+      <span class="sec-en">Substation</span>
+      <i class="sec-line"></i>
+    </div>
+    <div class="viz-inline" data-viz-scene="substation" id="viz-substation">
+      <div class="viz-inline-head">
+        <h3>110kV 降压变电站 · 三维全景</h3>
+        <span class="viz-sub">两条进线 · 110kV 双母线 + 母联 · 2×12.5MVA 主变 · 10kV 单母线分段</span>
+      </div>
+      <div class="viz-body">
+        <div class="viz-stage" tabindex="0">
+          <canvas class="viz-canvas" aria-label="110kV 降压变电站三维视图" role="img"></canvas>
+          <div class="viz-hud"></div>
+          <div class="viz-tip" hidden></div>
+          <p class="viz-hint">拖动环视 · 滚轮缩放 · 双击回全景</p>
+          <div class="viz-runbar" hidden>
+            <div class="run-track"><i class="run-fill"></i></div>
+            <span class="run-stage"></span>
+          </div>
+        </div>
+        <aside class="viz-side">
+          <div class="viz-card">
+            <h4 class="viz-part">点击场景里的设备</h4>
+            <div class="viz-desc">点设备或型号标签，看额定参数与选型依据。</div>
+          </div>
+          <div class="viz-block viz-extra" hidden></div>
+          <p class="viz-narr" aria-live="polite"></p>
+        </aside>
+      </div>
+    </div>
+
+    <div class="dwg-block" id="dwg">
+      <div class="dwg-bar">
+        <div class="dwg-kv">
+          <span class="dwg-k">A1 主接线图</span>
+          <span class="dwg-v">594 × 420 mm · 3 368 × 2 382 px · 点图看原图</span>
+        </div>
+        <a class="dwg-act btn btn-sm btn-ghost" href="assets/变电站-A1主接线图.pdf" download>下载 PDF</a>
+      </div>
+      <a class="dwg-figure" href="assets/grid-a1.png" target="_blank" rel="noopener" aria-label="A1 主接线图，点开看原图">
+        <img src="assets/grid-a1.png" alt="110kV 降压变电站 A1 主接线图：双回架空进线、110kV 双母线带母联、两台 12.5 MVA 主变、10kV 侧开关柜与无功补偿"
+             width="3368" height="2382" loading="lazy" decoding="async">
+      </a>
+      <p class="dwg-note">明细表对重复间隔用「同左」；三维场景同样只画 3 回出线，回数以本图为准。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="skills">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <h2>技能专长</h2>
+      <span class="sec-en">Capabilities</span>
+      <i class="sec-line"></i>
+    </div>
+    <p class="sec-intro">按「能独立做到什么」分级，悬停看它落在哪个项目里。</p>
+
+    <ul class="skill-list">
+      <li class="skill" tabindex="0" data-used="惰气控制 · 整机联调">
+        <div class="skill-k">
+          <h3>PLC / DCS 组态</h3>
+          <span class="level level-3">熟练</span>
+        </div>
+        <p class="skill-v">西门子 S7-1500、ABB AC500 系列 PLC 及力控组态；能独立完成 I/O 点表规划、梯形图 LD（IEC 61131-3）编程、Modbus TCP/RTU 通信配置与上位画面同址映射。ABB 侧在 Automation Builder（CODESYS 内核）里开发，不套用博途思路。</p>
+      </li>
+      <li class="skill" tabindex="0" data-used="智能仓库监测 · 12 路传感接入">
+        <div class="skill-k">
+          <h3>现场仪表与工业通信</h3>
+          <span class="level level-3">熟练</span>
+        </div>
+        <p class="skill-v">温度 / 温湿度 / 烟雾 / 红外仪表选型与信号采集，单系统完成 12 路传感接入与标定；区分模拟量、单总线、开关量不同接法；Modbus RTU/TCP、CAN、I2C/SPI 调试；ACS355 变频器分档调速与给定标定。</p>
+      </li>
+      <li class="skill" tabindex="0" data-used="惰气控制 · 5 类故障定位">
+        <div class="skill-k">
+          <h3>故障诊断与系统调试</h3>
+          <span class="level level-2">掌握</span>
+        </div>
+        <p class="skill-v">按「物理层 → 链路层 → 协议层 → 应用层」四层定位，PLC 联调闭环；定位并解决下载失败 / 变量不刷新 / 通信超时 / 执行器方向接反等 5 类典型故障。会先看现象的规律性（整齐的偏移多半是基址错，随机丢包多半是干扰），再动手改。</p>
+      </li>
+      <li class="skill" tabindex="0" data-used="电机调速实训 · 回路通电调试">
+        <div class="skill-k">
+          <h3>电气与仪表实操</h3>
+          <span class="level level-2">掌握</span>
+        </div>
+        <p class="skill-v">万用表、示波器实测与波形识读；接触器互锁、热继电器整定、正反转换相序的原理清楚，实训里做过主 / 控回路接线与通电调试；了解低压配电与常用控制电器，具备电路板级焊接装配与通电检测经验。</p>
+      </li>
+      <li class="skill" tabindex="0" data-used="智能仓库监测 · 固件开发">
+        <div class="skill-k">
+          <h3>固件与仿真工具</h3>
+          <span class="level level-2">掌握</span>
+        </div>
+        <p class="skill-v">STM32 固件开发与烧录（Keil MDK + SPL + J-Link / 串口 ISP）；独立完成收音机（SMT 贴片 / 回流焊）与万用表整机焊接组装，能识别并返修虚焊、连锡；Multisim / Proteus 电路与系统仿真。</p>
+      </li>
+      <li class="skill" tabindex="0" data-used="倒立摆控制仿真 · LQR / 串级 PID 整定">
+        <div class="skill-k">
+          <h3>控制理论与仿真</h3>
+          <span class="level level-2">掌握</span>
+        </div>
+        <p class="skill-v">自动控制原理、现代控制理论基础；能对一级倒立摆建模、线性化并求闭环极点，用 MATLAB / Simulink + Simscape 做时域仿真，对比 LQR、串级 PID 双闭环与 BP 神经网络 PID 的差别；本页演示的增益就是按闭环极点判据加时域仿真筛出来的。</p>
+      </li>
+      <li class="skill" tabindex="0" data-used="公益冬令营 · 直播运营 · 课设负责人">
+        <div class="skill-k">
+          <h3>表达与组织</h3>
+          <span class="level level-1">具备</span>
+        </div>
+        <p class="skill-v">公益冬令营独立设计课程并授课，把知识点改造成能上手做的小实验；直播专场单场峰值约 1500 人次；三个课设担任负责人，负责分工与进度推进。习惯按听众调整粒度——给操作工讲现象和动作，给工程师讲原理和数据；团队里把目标拆成可推进的小步，再落到具体的人和日期上。</p>
+      </li>
+    </ul>
+
+    <div class="edu-strip">
+      <div>
+        <span class="strip-k">教育背景</span>
+        <p>兰州理工大学（原甘肃工业大学）· 自动化（本科）· 2023-09 ~ 2027-07<br>全日制本科 · 2027 届 · 预计 2027 年 6 月入职</p>
+      </div>
+      <div>
+        <span class="strip-k">专业核心课程</span>
+        <p>电路与电子技术、模拟电子技术、数字电子技术、微处理器原理及应用、自动控制原理、现代控制理论、电气控制与 PLC 应用技术、检测与转换技术</p>
+      </div>
+      <div>
+        <span class="strip-k">数理与语言</span>
+        <p>高等数学、线性代数、概率论与数理统计、复变函数与积分变换、大学物理、大学英语</p>
+      </div>
+      <div>
+        <span class="strip-k">工具与工程基础</span>
+        <p>工程制图、C 语言程序设计、MATLAB / Simulink、Keil5、Multisim、Proteus</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="about">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <h2>自我评价</h2>
+      <span class="sec-en">Summary</span>
+      <i class="sec-line"></i>
+    </div>
+
+    <div class="eval-grid">
+      <article class="eval">
+        <span class="eval-no">01 / 专业上手</span>
+        <h3>从接线到组态到排故，整条链路走过一遍</h3>
+        <p>自动化专业本科，掌握 PLC 组态、仪表选型与信号采集。惰气项目里从 I/O 点表、LD 逻辑、Modbus 通信一直做到上位监控画面和整机联调，知道一套自控系统在每个环节「本来应该是什么样」——这也是排故时能判断「哪里不对」的前提。</p>
+      </article>
+
+      <article class="eval">
+        <span class="eval-no">02 / 拆解问题</span>
+        <h3>把故障拆成四层，逐层排除</h3>
+        <p>联调中按「物理层 → 链路层 → 协议层 → 应用层」定位，独立排查并解决 5 类典型故障，沉淀成可复用的排故清单，排查耗时从数小时压到约 30 分钟。现象先看规律性：整齐偏移多半是基址错，随机丢包多半是干扰，这比挨个换模块快。</p>
+      </article>
+
+      <article class="eval">
+        <span class="eval-no">03 / 学习方式</span>
+        <h3>会用工具，也清楚它在哪里会错</h3>
+        <p>写固件时用大模型起手初始化代码，但每条配置都拿 datasheet 核对寄存器含义——它给小众外设的参数经常是猜的。真正花时间的是它给不了的部分：时序对不对、上拉够不够、采样跳不跳。不确定的地方我宁可说不确定，也不编数据。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="sec" id="more">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <h2>更多</h2>
+      <span class="sec-en">More</span>
+      <i class="sec-line"></i>
+    </div>
+    <div class="more-block">
+      <button class="more-btn" type="button" id="more-toggle" aria-expanded="false" aria-controls="more-panel">
+        <span class="more-label"><span class="more-main" id="more-main">展开更多</span><em>数控电流源 · 交直流电机调速实训 · 完整经历 11 段</em></span>
+        <span class="more-sign" aria-hidden="true">＋</span>
+      </button>
+      <div class="more-panel" id="more-panel" hidden>
+
+      <h3 class="more-sub">更多项目 <span>2025 · 纯硬件</span></h3>
+
+      <div class="cards cards-more" id="project-cards-more">
+
+      <article class="card" data-card id="card-current">
+        <button class="card-head" type="button" aria-expanded="false">
+          <div class="card-title-row">
+            <h3>数控电流源</h3>
+            <span class="role">负责人</span>
+          </div>
+          <p class="card-sub">数字逻辑 + 模拟恒流 · 课程设计 · 2025.12–2026.01</p>
+          <p class="card-line">四档恒流 1 / 50 / 100 / 150 mA，仿真与实物均跑通。</p>
+          <span class="card-toggle" aria-hidden="true">展开</span>
+        </button>
+        <div class="card-body">
+          <dl>
+            <div><dt>项目内容</dt><dd>四档数控恒流源，把需求拆成<b>电源 / 控制 / 检测 / 恒流</b>四个模块。按键经 74LS192N 计数生成 0–3 档编码，74LS04 反相 + 4066BD 模拟开关选通不同参考支路，送入运放与功率管完成 V/I 转换输出恒流；档位经 7483N + 7447N 译码驱动数码管显示。</dd></div>
+            <div><dt>本人职责</dt><dd>独立完成方案设计与硬件实现：四模块划分与电路设计；用 Multisim 逐档仿真验证四档逻辑与切换过程；推进硬件联调，确认选通、显示与恒流三者联动无误；排查虚焊与器件极性错误。</dd></div>
+            <div><dt>恒流原理</dt><dd>采样电阻上的压降与基准电压比较，误差经运放放大后调功率管，把电流稳在设定值。4066 只切<b>参考电压支路</b>、不在主电流回路里——运放输入阻抗高，支路几乎不走电流，几十欧的导通电阻只影响分压比，标定一次即可补掉；若把它串进主回路，误差就会直接叠加到负载上。精度主要由采样电阻精度与温漂、运放失调电压、功率管温升漂移决定，数字部分只决定档位。</dd></div>
+                        <div><dt>调试记录</dt><dd>
+              <ul class="mini-list fix-list">
+                <li><b>某一档切过去没有输出</b>——按键计数和译码显示都正常，问题在选通支路 → 逐个量 4066 的使能与支路接点，定位到虚焊。</li>
+                <li><b>切换瞬间电流有跳变</b>——选通支路一变、恒流环要重新建立，这一版只做了逻辑上的先断后通，没做软切换。</li>
+              </ul>
+            </dd></div>
+            <div><dt>项目成果</dt><dd>稳定输出 1 / 50 / 100 / 150 mA 四档恒流，档位切换与实时显示正常；Multisim 四档仿真与硬件联调均验证通过。</dd></div>
+            <div><dt>复盘</dt><dd>四档切换时选通支路变化、环路要重新建立，我这一版只在逻辑上做了先断后通，没有软切换，所以切换瞬间会有跳变——加大输出电容、做渐变给定是可以改进的方向。另外用 74 系列搭是课程要求，练的是计数器 / 译码器 / 模拟开关怎么配合；现在回头看，MCU + DAC 会简单得多、精度也更好调。</dd></div>
+          </dl>
+          <p class="card-note">技术栈：74LS192N · 74LS04 · 4066BD · 7483N / 7447N · 运放恒流环 · Multisim<br>资料：<a href="https://wwbta.lanzouq.com/iiJhY3vg2i9a" target="_blank" rel="noopener">wwbta.lanzouq.com/iiJhY3vg2i9a</a></p>
+        </div>
+      </article>
+
+      <article class="card" data-card id="card-motor">
+        <button class="card-head" type="button" aria-expanded="false">
+          <div class="card-title-row">
+            <h3>交直流电机调速实训</h3>
+            <span class="role role-muted">小组成员</span>
+          </div>
+          <p class="card-sub">西门子 S7-1500 · 实训项目 · 2025.06–07</p>
+          <p class="card-line">2 套回路接线通电，位置闭环 4 项功能达标。</p>
+          <span class="card-toggle" aria-hidden="true">展开</span>
+        </button>
+        <div class="card-body">
+          <dl>
+            <div><dt>项目内容</dt><dd>搭建交直流电机控制主回路与控制回路并完成通电调试；基于西门子 S7-1500 实现交流电动机位置控制，读取编码器反馈构成位置闭环。</dd></div>
+            <div><dt>本人职责</dt><dd>作为 3 名小组成员之一，承担交直流电机主 / 控回路接线与通电调试；参与 S7-1500 位置控制调试，逐项完成定位、正反转、调速与制动；参与搭建编码器检测电路，实现转速与转向测量。</dd></div>
+            <div><dt>闭环与整定</dt><dd>用增量式编码器，A/B 相计数并判向，Z 相做零点校正。整定顺序是先把比例增益加到接近临界振荡再回退，然后加积分消稳态误差；出现振荡就降增益或加滤波。这里要说明：<b>参数是小组一起试的，我承担的是接线与通电调试那一段</b>，不是我一个人定的。</dd></div>
+                        <div><dt>调试记录</dt><dd>
+              <ul class="mini-list fix-list">
+                <li><b>转速测得出来、方向判不对</b>——增量式编码器要 A/B 两相同时计数才能辨向，只接一相只能测速；Z 相还得做零点校正，否则累计误差回不了零。</li>
+                <li><b>比例增益给大就振荡</b>——先把比例加到接近临界振荡再回退，然后补积分消稳态误差，振荡时降增益或加滤波。参数是小组一起试的。</li>
+              </ul>
+            </dd></div>
+            <div><dt>项目成果</dt><dd>完成交直流电机主 / 控 2 套回路的接线与通电调试；位置闭环的定位、正反转、调速、制动共 4 项功能全部达标；编码器测速与辨向结果与设定值一致；与 2 名组员分工协作、按节点完成整机联调。</dd></div>
+            <div><dt>安全与实操</dt><dd>通电前先验电、确认急停可用；测电压用并联、单手操作、档位先高后低；测通断前断电并给电容放电。正反转靠两台接触器换相序，电气互锁是把对方常闭辅助触点串在自己线圈回路里，防止相间短路。</dd></div>
+          </dl>
+          <p class="card-note">技术栈：S7-1500 · 增量式编码器闭环 · 主回路接线 · 通电调试 · 接触器互锁</p>
+        </div>
+      </article>
+      </div>
+
+      <h3 class="more-sub">完整经历 <span>时间倒序 · 11 段</span></h3>
+
+      <ol class="timeline">
+
+        <li class="tl-item">
+          <span class="tl-date">2026.07</span>
+          <div class="tl-body">
+            <h3>惰气控制系统设计 <span class="tl-sub">课程综合训练（自选课题）· 负责人</span></h3>
+            <p>ABB AC500 PLC 硬件组态、LD 顺序控制与联锁、Modbus 驱动 ACS355 变频器、力控上位监控，到整机联调全部独立完成。</p>
+            <p class="tl-metric">8DI / 6DO · 5 类故障定位 · 排故耗时 数小时 → 约 30 分钟</p>
+            <a class="tl-link" href="#card-inert">展开项目卡 · 惰气控制 →</a>
+          </div>
+        </li>
+
+        <li class="tl-item">
+          <span class="tl-date">2026.05 — 2026.06</span>
+          <div class="tl-body">
+            <h3>智能仓库监测系统 <span class="tl-sub">课程设计 · 负责人</span></h3>
+            <p>从选型、接线到固件与联调独立完成，重点解决单点判据误报频发的问题。</p>
+            <p class="tl-metric">12 路传感 · 误报 0 次 · 报警响应 &lt;1 s · 连续运行 8 h+ 无丢数</p>
+            <a class="tl-link" href="#card-warehouse">展开项目卡 · 智能仓库 →</a>
+          </div>
+        </li>
+
+        <li class="tl-item">
+          <span class="tl-date">2026.05 — 2026.06</span>
+          <div class="tl-body">
+            <h3>一级倒立摆控制仿真 <span class="tl-sub">课程设计 · 小组成员</span></h3>
+            <p>建模、线性化、三种控制器的设计与整定，到 Simulink / Simscape 时域仿真与对比，由小组共同完成；报告按指导书章节结构编写。</p>
+            <p class="tl-metric">LQR / 串级 PID 双闭环 / BP 神经网络 PID 三方案对比 · 同一初始偏角与扰动量</p>
+            <a class="tl-link" href="#card-pendulum">展开项目卡 · 倒立摆 →</a>
+          </div>
+        </li>
+
+        <li class="tl-item">
+          <span class="tl-date">2026.04 — 2026.05</span>
+          <div class="tl-body">
+            <h3>双水罐液位监控系统 <span class="tl-sub">课程实验 · 独立完成</span></h3>
+            <p>力控组态搭两罐液位画面：填充动画、阀泵状态显示、管道流动；脚本按联锁条件驱动液位循环，配越限报警、实时 / 历史趋势与四画面互跳。</p>
+            <p class="tl-metric">两罐 · 三执行器联锁 · 四画面互跳 · 与 S7-1500 / PLCSIM 通信联调</p>
+            <a class="tl-link" href="#card-tanks">展开项目卡 · 双水罐 →</a>
+          </div>
+        </li>
+
+        <li class="tl-item">
+          <span class="tl-date">2026.01 — 2026.02</span>
+          <div class="tl-body">
+            <h3>广华食品有限公司 <span class="tl-sub">线上直播运营 · 「银丝米线」专场 · 实习</span></h3>
+            <p><b>工作内容</b>：参与广华食品「银丝米线」线上专场直播，抖音、视频号双平台同步开播，在真实带货场景中走完「预热 → 互动 → 即时转化」的完整链路。</p>
+            <p><b>本人职责</b>：参与开播前的预热准备与场次物料核对，直播过程中负责互动应答与转化环节的配合，跟完全程两个多小时。</p>
+            <p><b>工作成果</b>：单场观看峰值约 1500 人次，2 小时内销售额突破 2000 元。</p>
+            <p><b>与工程的关系</b>：这段和自动化没有直接关系，但它练的是「把话说到对方愿意继续听」——和给现场操作工讲清一次设备改动是同一件事。技术再对，讲不明白也推不动。</p>
+            <p class="tl-metric">抖音 + 视频号双平台 · 峰值约 1500 人次 · 2 小时销售额 2000 元+</p>
+          </div>
+        </li>
+
+        <li class="tl-item">
+          <span class="tl-date">2026.01 — 2026.02</span>
+          <div class="tl-body">
+            <h3>新兴县青年志愿者协会 <span class="tl-sub">「青创未来」公益冬令营 · 讲师 · 志愿服务</span></h3>
+            <p><b>工作内容</b>：返家乡担任公益冬令营讲师，面向当地孩子讲授趣味课程。</p>
+            <p><b>本人职责</b>：独立设计课程与制作课件，把知识点改造成能上手做的小实验，从 0 到 1 搭起一段完整的学习体验；负责讲授与课堂组织。</p>
+            <p><b>收获</b>：最大的转变是从「照着背稿讲」到「蹲下来用他们听得懂的方式讲」。同一件事，给专业的人讲原理，给孩子讲现象加动手——这个切换后来在项目汇报和现场沟通里一直在用。</p>
+            <p class="tl-metric">独立设计并讲授完整课程 · 内容策划 + 公开表达</p>
+          </div>
+        </li>
+
+        <li class="tl-item">
+          <span class="tl-date">2025.12 — 2026.01</span>
+          <div class="tl-body">
+            <h3>110kV 降压变电站电气一次设计 <span class="tl-sub">课程综合训练 · 全程参与</span></h3>
+            <p>按任务书负荷资料统计有功缺额、定电压等级与主接线方案，两台 12.5 MVA 主变分列运行；标幺值算各点短路电流，逐台校验设备，AutoCAD 出 A1 主接线图。</p>
+            <p class="tl-metric">Sd=100 MVA · K₂ 点 Ik≈5 kA · 110 kV 双母线 + 10 kV 单母线分段 · A1 出图 1 张</p>
+            <a class="tl-link" href="#card-substation">展开项目卡 · 变电站 →</a>
+          </div>
+        </li>
+
+        <li class="tl-item">
+          <span class="tl-date">2025.12 — 2026.01</span>
+          <div class="tl-body">
+            <h3>数控电流源 <span class="tl-sub">课程设计 · 负责人</span></h3>
+            <p>四模块划分（电源 / 控制 / 检测 / 恒流）、数字逻辑电路设计、Multisim 逐档仿真，到硬件联调与虚焊排查。</p>
+            <p class="tl-metric">1 / 50 / 100 / 150 mA 四档 · 档位切换与数码管显示联动正常</p>
+            <a class="tl-link" href="#card-current">展开项目卡 · 数控电流源 →</a>
+          </div>
+        </li>
+
+        <li class="tl-item">
+          <span class="tl-date">2025.07 — 2025.08</span>
+          <div class="tl-body">
+            <h3>广华食品有限公司 <span class="tl-sub">生产车间运维岗 · 食品包装产线 · 实习</span></h3>
+            <p><b>工作内容</b>：食品包装产线实习，参与全自动包装机的开机点检、运行看护与日常维护，熟悉包装线自动化流程、仪表联锁逻辑与设备点检要求。</p>
+            <p><b>本人职责</b>：按生产计划完成装料与开机前点检——气路压力、电源与急停状态、光电与传感器是否被挡、机械部位有无异响、料位是否够；开机后逐班巡视运行状态（异响、振动、报警指示、成品外观）；发现异常先做初判，区分设备故障与来料 / 工艺参数问题，物料状态与设备参数类当场调整并复核，需停机的及时上报；按点检规程填写运行与交接班记录（停机次数、原因、处理方式、遗留问题），参与设备日常保养与车间安全规程执行。</p>
+            <p><b>工作成果</b>：连续 6 周每日到岗，累计 40+ 天开机点检与运行巡视；因物料卡机频发，日均处置卡机等异常 7–8 次，其中约八成为物料状态、设备参数类问题，均现场调整并复核解决，避免非计划停机；点检与交接班记录完整无遗漏。</p>
+            <p><b>权限边界</b>：设备类问题（机械卡阻、气路掉压、传感器常给信号）我只做到安全动作——停机、确认停稳、告知当班这台不能开，再把现象记清楚（哪一段、什么报警、什么条件下出现），然后叫机修；拆开维修不是我做的，我在旁边配合并记录他们的判断过程。正式的挂牌上锁（LOTO）由机修执行。</p>
+            <p class="tl-metric">6 周每日到岗 · 40+ 天点检 · 日均 7–8 次异常，约八成现场闭环</p>
+          </div>
+        </li>
+
+        <li class="tl-item">
+          <span class="tl-date">2025.06 — 2025.07</span>
+          <div class="tl-body">
+            <h3>交直流电机调速实训 <span class="tl-sub">实训项目 · 小组成员（3 人）</span></h3>
+            <p>搭建交直流电机主回路与控制回路并完成通电调试；参与 S7-1500 交流电机位置控制调试，用增量式编码器（A/B/Z 相）反馈构成位置闭环，逐项完成定位、正反转、调速、制动。</p>
+            <p class="tl-metric">2 套回路接线通电 · 4 项闭环功能达标 · 测速辨向与设定一致</p>
+            <a class="tl-link" href="#card-motor">展开项目卡 · 电机调速 →</a>
+          </div>
+        </li>
+
+        <li class="tl-item">
+          <span class="tl-date">2024.04 — 2024.06</span>
+          <div class="tl-body">
+            <h3>兰州理工大学 工程训练中心 <span class="tl-sub">焊接装配实习生 · 电子工艺实习</span></h3>
+            <p><b>实习内容</b>：围绕收音机与万用表两台电子整机，完成元器件识别、贴片焊接、整机装配到通电检测的全流程实操；使用回流焊炉、恒温烙铁、丝印台、万用表、示波器等设备。</p>
+            <p><b>本人职责</b>：独立完成两台整机的焊接装配。收音机自空白 PCB 起，按 SMT 工艺选配摆放贴片元件、涂覆焊锡膏，经回流焊炉焊接后补焊其余元器件；万用表由电阻 / 电容 / 电位器 / 转换开关等散件从零装配，对照原理图与丝印识别物料、引脚成型后手工焊接，再与表壳 / 表笔 / 旋钮组装；在指导老师带教下完成各工序自检，识别并补焊返修虚焊、连锡等缺陷。</p>
+            <p><b>实习成果</b>：收音机通电检测功放输出正常，实现 FM/AM 波段电台接收、选台与耳机输出；万用表整机装配后各档位功能正常并通过验收。</p>
+            <p class="tl-metric">2 台整机独立装配验收 · 掌握 SMT 贴片 / 回流焊 / 通孔焊接 / 缺陷返修</p>
+          </div>
+        </li>
+      </ol>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <span>黄柏相 · 兰州理工大学自动化 · 2027 届</span>
+    <span class="foot-meta">本站由原生 HTML / CSS / JS + Three.js 手写构建 · 无框架</span>
+    <a class="foot-top" href="#top">回到顶部 ↑</a>
+  </div>
+</footer>
+
+<div class="modal" id="unlock-modal" hidden>
+  <div class="modal-mask" data-close></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-x" type="button" aria-label="关闭" data-close>&times;</button>
+    <h3 id="modal-title">留个机构名 <span class="modal-opt">可选</span></h3>
+    <p class="modal-lead">这一步只是让我知道是哪家公司在看，方便后续跟进。</p>
+    <form id="unlock-form" novalidate>
+      <label class="field">
+        <span>招聘机构 <i>必填</i></span>
+        <input type="text" id="f-org" name="org" placeholder="例：某某科技有限公司 / 某某设计院" autocomplete="organization" required maxlength="60">
+      </label>
+      <label class="field">
+        <span>备注 <i class="opt">选填</i></span>
+        <input type="text" id="f-note" name="note" placeholder="岗位名称或沟通渠道，例：电气工程师 / Boss 直聘" maxlength="80">
+      </label>
+      <p class="field-err" id="f-err" hidden>请填写招聘机构名称（至少 2 个字）。</p>
+      <div class="modal-actions">
+        <button class="btn btn-solid" type="submit">提交登记</button>
+        <button class="btn btn-ghost" type="button" data-close>不用了</button>
+      </div>
+    </form>
+    <div class="modal-done" id="modal-done" hidden>
+      <p class="done-k">已登记</p>
+      <p class="done-num" id="done-num">—</p>
+      <p class="done-note">记录方式：<span id="done-mode"></span>。号码在上面的联系区，可直接复制。</p>
+    </div>
+  </div>
+</div>
+
+<div class="admin" id="admin" hidden>
+  <div class="admin-head">
+    <strong>访问记录（本地开发面板）</strong>
+    <span class="admin-hint">Ctrl + Shift + A 开关</span>
+    <button type="button" id="admin-close">关闭</button>
+  </div>
+  <div class="admin-body">
+    <p class="admin-empty" id="admin-empty">暂无记录。</p>
+    <table id="admin-table" hidden>
+      <thead><tr><th>时间</th><th>机构</th><th>备注</th><th>来源页</th><th>浏览器</th><th>通道</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="admin-foot">
+    <button type="button" id="admin-export">导出 CSV</button>
+    <button type="button" id="admin-clear">清空</button>
+  </div>
+</div>
+
+<script src="vendor/three.bundle.js"></script>
+<script src="js/config.js"></script>
+<script src="js/logger.js"></script>
+<script src="js/contact.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/main.js"></script>
+<script src="js/hero3d.js"></script>
+<script src="js/pendulum.js"></script>
+<script src="js/viz-tex.js"></script>
+<script src="js/process.js"></script>
+<script src="js/viz-tanks.js"></script>
+<script src="js/viz-inert.js"></script>
+<script src="js/substation.js"></script>
+<script src="js/viz.js"></script>
+</body>
+</html>
