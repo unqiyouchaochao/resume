@@ -1,0 +1,1 @@
+# 跳过 Jekyll 构建，直接以静态文件服务。GitHub Pages 专用；Cloudflare Pages 会忽略此文件。
